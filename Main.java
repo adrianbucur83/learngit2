@@ -91,17 +91,12 @@ public class Main {
 
         //    Set<Person> orderedByAge = new TreeSet<>();
         //    Set<Person> orderedByAge = new TreeSet<>(new AgeComparator());
-        Set<Person> orderedByAge = new TreeSet<>();
+        List<Person> orderedByAge = new LinkedList<>();
         orderedByAge.add(people.get(0));
         orderedByAge.add(people.get(1));
         orderedByAge.add(people.get(2));
 
-        Collections.sort(people, new Comparator<Person>() {
-            @Override
-            public int compare(Person o1, Person o2) {
-                return o1.getAge() - o2.getAge();
-            }
-        });
+        Collections.sort(orderedByAge, (o1, o2) -> o1.age - o2.age);
 
         System.out.println("Din treeset");
         System.out.println(orderedByAge);
