@@ -2,104 +2,81 @@ package com.learn.java;
 
 import java.util.*;
 
-public class Main {
+class Main {
 
 
     public static void main(String[] args) {
 
-     /*   Person[] people = new Person[3];
-
-        people[0] = new Angajat("AAA bbbb", 30);
-        people[1] = new Somer("person two", 20);
-        people[2] = new Student("person three", 15);
-
-        for(Person p: people){
-            System.out.println(p.toString());
-        }*/
-/*
-        List<Person> arrayPeople = new ArrayList<>();
-
-        arrayPeople.add(new Angajat("Johny one", 14));
-        arrayPeople.add(new Student("Student two", 14));
-        arrayPeople.add(new Somer("Some three", 14));
-
-        Iterator<Person> it = arrayPeople.iterator();
-
-        System.out.println(arrayPeople.size());
-
-        while (it.hasNext()){
-            Person p = it.next();
-            System.out.println(p);
-           */
 
         ArrayList<Person> people = new ArrayList<>();
 
 
-        people.add(new Angajat("Xania", 14, "1234"));
-        people.add(new Somer("Lilly", 20, "1234"));
-        people.add(new Somer("Bogdan", 36, "5555"));
-
-        String nickname;
-
-        Map<String, Person> harta = new HashMap<>();
-
-        harta.put("Gigel", people.get(0));
-        harta.put("Ani", people.get(1));
-        harta.put("Cucu", people.get(2));
-/*
-
-        for (String key: harta.keySet()){
-            System.out.println(harta.get(key) + "   " + key);
-        }
-*/
-/*
-        for (Map.Entry<String, Person> allentries : harta.entrySet()){
-
-            System.out.println(allentries);
-        }*/
-
-//
-//        for (Person p : harta.values()) {
-//
-//            System.out.println(p);
-//        }
+        people.add(new Angajat("Zara", 14, "1234"));
+        people.add(new Somer("Petru", 20, "1234"));
+        people.add(new Student("Bogdan", 36, "5555"));
+        people.add(new Angajat("Cedru", 40, "14234"));
+        people.add(new Somer("Daniela", 50, "123544"));
+        people.add(new Student("George", 39, "5445555"));
 
 
-//        LinkedList<Person> coada = new LinkedList();
-//
-//        for (Person p : people) {
-//            coada.add(p);}
-//
-//            for (Person pp : coada) {
-//                if (pp.age > 30) {
-//                    coada.remove(pp);
-//                }
-//
-//            }
-//
-//
-//            System.out.println("From que    " + coada.toString());
+        Set<Person> orderedByAge = new TreeSet<>(new AgeComparator());
 
+        orderedByAge.addAll(people);
 
-//
-//        for (Person p : people
-//             ) {
-//            System.out.println(p.toString());
-//        }
-//
-
-
-        //    Set<Person> orderedByAge = new TreeSet<>();
-        //    Set<Person> orderedByAge = new TreeSet<>(new AgeComparator());
-        List<Person> orderedByAge = new LinkedList<>();
-        orderedByAge.add(people.get(0));
-        orderedByAge.add(people.get(1));
-        orderedByAge.add(people.get(2));
-
-        Collections.sort(orderedByAge, (o1, o2) -> o1.age - o2.age);
-
-        System.out.println("Din treeset");
+        System.out.println("Lista persoane ordonata dupa varsta \n");
         System.out.println(orderedByAge);
+
+        // cheat here
+        // Collections.sort(orderedByAge, Comparator.comparingInt(o -> o.age));
+        // Collections.sort(orderedByAge, Comparator.comparing(o -> o.name));
+
+        //Sort by name now
+
+        Set<Person> orderedByName = new TreeSet<>(new NameComparator());
+
+        orderedByName.addAll(people);
+
+        System.out.println("Lista persoane ordonata dupa nume");
+        System.out.println(orderedByName);
+
+
+        // part two, hobbies
+
+
+        Set<Hobby> hobbies = new HashSet<>();
+
+        Address addr1 = new Address("Romania", "Cluj", "Gruia", "58");
+        Address addr2 = new Address("Hungary", "Budapest", "Bfffa", "28");
+        Address addr3 = new Address("Germany", "Berlin", "Schnitzelstrasse", "8");
+
+        Hobby cycling = new Hobby("cycling", 10, addr1, addr2, addr3);
+        Hobby tennis = new Hobby("tennis", 5, addr3);
+        Hobby reading = new Hobby("reading", 500, addr1, addr3);
+
+        hobbies.add(cycling);
+        hobbies.add(tennis);
+        hobbies.add(reading);
+
+        //transform set into list for part 2 of the homework
+
+        ArrayList<Hobby> hobbiesAsList = new ArrayList(hobbies);
+
+        Person p = people.get(0);
+
+        HashMap<Person, List<Hobby>> personAndHobbies = new HashMap<>();
+
+        personAndHobbies.put(p, hobbiesAsList);
+
+        System.out.println();
+        System.out.println("------------------ Person & hobbies --------------");
+        System.out.println();
+
+        System.out.println("Hobbies for person " + p.getName());
+        personAndHobbies.get(p).forEach(x -> {
+            System.out.println(x.getHobbyName() + " is practiced in:");
+            x.getAddresses().forEach(y -> System.out.println(y.getCountry()));
+            System.out.println();
+        });
 
 
     }

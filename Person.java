@@ -2,14 +2,14 @@ package com.learn.java;
 
 import java.util.Objects;
 
-public class Person implements Comparable {
+class Person {
 
-    String cnp;
-    String name;
-    int age;
-    String jobStatus;
+    private final String cnp;
+    private final String name;
+    private final int age;
 
-    public Person(String name, int age, String cnp) {
+
+    Person(String name, int age, String cnp) {
         this.name = name;
         this.age = age;
         this.cnp = cnp;
@@ -20,10 +20,9 @@ public class Person implements Comparable {
         return cnp;
     }
 
-    public void setCnp(String cnp) {
-        this.cnp = cnp;
+    public String getName() {
+        return name;
     }
-
 
     public int getAge() {
         return age;
@@ -34,8 +33,8 @@ public class Person implements Comparable {
         return "Person{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
-                ", jobStatus='" + getClass() + '\'' +
-                '}';
+                ", jobStatus='" + getClass().getSimpleName() + '\'' +
+                '}' + "\n";
     }
 
     @Override
@@ -43,17 +42,8 @@ public class Person implements Comparable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return Objects.equals(cnp, person.cnp);
+        return (Objects.equals(cnp, person.cnp) && (person.name.equals(name)));
     }
 
 
-    @Override
-    public int compareTo(Object o) {
-
-        Person temp = (Person) o;
-
-        return this.name.compareTo(temp.name);
-
-
-    }
 }
